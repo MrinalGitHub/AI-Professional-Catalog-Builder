@@ -14,11 +14,11 @@ import { Phone, Wrench, MapPin, ChevronDown } from "lucide-react";
 // ─── CDN URLS ───────────────────────────────────────────────────────────────
 const LOGO = "https://d2xsxph8kpxj0f.cloudfront.net/310419663029485756/gXaTpG7hJqp9ZjTjhbtCNX/livingvitals_logo_b5cb648b.png";
 
-// Clean product images from Ryoto website (white bg, full body)
-const ELECTRO_ZL9_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/310419663029485756/gXaTpG7hJqp9ZjTjhbtCNX/electro_zl9_clean_856c6afe.jpg";
-const NEUTRON_PRO_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/310419663029485756/gXaTpG7hJqp9ZjTjhbtCNX/neutron_pro_clean_ad88c183.webp";
-const POLO_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/310419663029485756/gXaTpG7hJqp9ZjTjhbtCNX/polo_clean_2f1da090.webp";
-const ATOM_PRO_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/310419663029485756/gXaTpG7hJqp9ZjTjhbtCNX/atom_pro_clean_c480fdff.webp";
+// Front-facing product images (white bg, no yellow, all front view)
+const ELECTRO_ZL9_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/310419663029485756/gXaTpG7hJqp9ZjTjhbtCNX/electro-zl9-front_1d57b51f.jpg";
+const NEUTRON_PRO_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/310419663029485756/gXaTpG7hJqp9ZjTjhbtCNX/neutron-pro-front_b83795ff.jpg";
+const POLO_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/310419663029485756/gXaTpG7hJqp9ZjTjhbtCNX/polo-front_f1d7a3ab.jpg";
+const ATOM_PRO_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/310419663029485756/gXaTpG7hJqp9ZjTjhbtCNX/atom-pro-front_13fb53ba.png";
 
 // ─── DATA ───────────────────────────────────────────────────────────────────
 
