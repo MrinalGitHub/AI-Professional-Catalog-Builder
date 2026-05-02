@@ -92,8 +92,8 @@ const models: ModelData[] = [
       { config: "Without Battery", type: "base", range: "—", price: "₹21,500", charging: "—", charger: "—", warranty: "—" },
       { config: "Lead Acid 48V", type: "lead", range: "50 km", price: "₹32,500", charging: "5–6 Hours", charger: "4AMP Auto cut", warranty: "1 Year" },
       { config: "Lead Acid 60V", type: "lead", range: "70 km", price: "₹35,000", charging: "5–6 Hours", charger: "4AMP Auto cut", warranty: "1 Year" },
-      { config: "Lithium 48V / 32Ah", type: "lithium", range: "50 km", price: "₹37,000", charging: "3–4 Hours", charger: "6AMP Auto cut", warranty: "2 Years" },
-      { config: "Lithium 60V / 36Ah", type: "lithium", range: "70 km", price: "₹42,500", charging: "3–4 Hours", charger: "6AMP Auto cut", warranty: "2 Years" },
+      { config: "Lithium 48V / 32Ah", type: "lithium", range: "50 km", price: "₹34,500", charging: "3–4 Hours", charger: "6AMP Auto cut", warranty: "2 Years" },
+      { config: "Lithium 60V / 36Ah", type: "lithium", range: "70 km", price: "₹40,000", charging: "3–4 Hours", charger: "6AMP Auto cut", warranty: "2 Years" },
     ],
   },
   {
