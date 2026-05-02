@@ -13,6 +13,7 @@ Build professional, branded product catalogues as static web pages. Supports any
 2. **Validate product-to-pricing mapping** with user
 3. **Build the catalogue** as a static webdev project
 4. **Iterate** based on user feedback
+5. **Deploy** — GitHub backup + GitHub Pages (docs/ folder)
 
 ## Step 1: Gather Inputs
 
@@ -108,6 +109,127 @@ Common iteration requests:
 - **Branding adjustments** — dealer is always hero, manufacturer always footnote
 - **Add/remove products** — add new product sections or remove discontinued ones
 
+## Step 5: Deploy — GitHub Backup + GitHub Pages
+
+Every catalogue MUST be backed up to GitHub and made deployable via GitHub Pages. This ensures the user's intellectual property is preserved and the catalogue is publicly accessible with a shareable URL.
+
+### 5a. Create a Public GitHub Repository
+
+```bash
+# Create a public repo (required for GitHub Pages on free plans)
+gh repo create <repo-name> --public --description "Product Catalogue — <Dealer Name>"
+
+# Clone it
+gh repo clone <username>/<repo-name>
+cd <repo-name>
+```
+
+### 5b. Configure Vite for GitHub Pages
+
+In `vite.config.ts`, add a conditional base path and output directory so the same project supports both local development and GitHub Pages:
+
+```typescript
+// Add to defineConfig:
+base: process.env.GITHUB_PAGES === 'true' ? '/<repo-name>/' : '/',
+build: {
+  outDir: process.env.GITHUB_PAGES === 'true'
+    ? path.resolve(import.meta.dirname, "docs")
+    : path.resolve(import.meta.dirname, "dist/public"),
+  emptyOutDir: true,
+},
+```
+
+### 5c. Configure Wouter Router for Base Path
+
+In `App.tsx`, wrap routes in a `<Router>` with a dynamic base path so client-side routing works under the repo subdirectory:
+
+```tsx
+import { Router } from "wouter";
+
+const basePath = import.meta.env.BASE_URL?.replace(/\/$/, '') || '';
+
+function App() {
+  return (
+    <Router base={basePath}>
+      {/* ... routes ... */}
+    </Router>
+  );
+}
+```
+
+### 5d. Build and Prepare the docs/ Folder
+
+```bash
+# Build for GitHub Pages (outputs to docs/ with correct base path)
+GITHUB_PAGES=true pnpm vite build
+
+# Create SPA routing fallback (GitHub Pages serves 404.html for unknown routes)
+cp docs/index.html docs/404.html
+
+# Prevent Jekyll processing (preserves files starting with underscore)
+touch docs/.nojekyll
+
+# Clean up development-only artifacts from the build
+# Remove any Manus debug-collector or analytics script tags from docs/index.html
+```
+
+### 5e. Clean the Production Build
+
+Remove development-only artifacts that should not appear in the public deployment:
+
+- Remove `<script src="/__manus__/debug-collector.js">` from `docs/index.html`
+- Remove any analytics script tags referencing `manus-analytics.com`
+- Delete the `docs/__manus__/` directory if it was generated
+
+### 5f. Copy Project Files and Push to GitHub
+
+```bash
+# Copy all source files + docs/ to the cloned repo
+cp -r client/ server/ shared/ skill/ docs/ package.json pnpm-lock.yaml \
+      vite.config.ts tsconfig.json tsconfig.node.json README.md .gitignore \
+      /path/to/cloned-repo/
+
+# Commit and push
+cd /path/to/cloned-repo
+git add -A
+git commit -m "Add catalogue with pre-built docs/ for GitHub Pages"
+git push origin main
+```
+
+### 5g. Enable GitHub Pages (User Action)
+
+Instruct the user to:
+
+1. Go to the repo **Settings** → **Pages**
+2. Under **Source**, select **"Deploy from a branch"**
+3. Choose **main** branch and **/docs** folder
+4. Click **Save**
+
+The catalogue will be live at: `https://<username>.github.io/<repo-name>/`
+
+### 5h. Future Updates
+
+After any code changes, rebuild and push the updated docs/:
+
+```bash
+GITHUB_PAGES=true pnpm vite build
+cp docs/index.html docs/404.html
+# Clean manus artifacts from docs/index.html if present
+git add docs/ && git commit -m "Rebuild docs for GitHub Pages" && git push
+```
+
+### Deployment Checklist
+
+- [ ] GitHub repo is **public** (required for GitHub Pages on free plans)
+- [ ] `vite.config.ts` has conditional `base` and `outDir` for `GITHUB_PAGES` env
+- [ ] `App.tsx` uses `<Router base={basePath}>` for subdirectory routing
+- [ ] `docs/index.html` exists and is clean (no debug/analytics artifacts)
+- [ ] `docs/404.html` exists (copy of index.html for SPA routing)
+- [ ] `docs/.nojekyll` exists (prevents Jekyll processing)
+- [ ] `docs/__manus__/` directory removed
+- [ ] README includes live demo URL and deployment instructions
+- [ ] User instructed to set Pages source to "Deploy from a branch" → main → /docs
+
 ## Checklist Before Delivery
 
 - [ ] Dealer logo renders correctly (transparent PNG, large in cover)
@@ -120,3 +242,6 @@ Common iteration requests:
 - [ ] Accessories/add-on footnote on every product page (not cover/contact)
 - [ ] Contact section has correct address, sales & service numbers
 - [ ] Responsive layout works on mobile
+- [ ] GitHub repo created and code pushed (public for GitHub Pages)
+- [ ] docs/ folder built, cleaned, and committed for GitHub Pages deployment
+- [ ] README updated with live demo URL and deployment instructions

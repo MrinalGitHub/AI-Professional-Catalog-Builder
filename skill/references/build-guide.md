@@ -119,6 +119,50 @@ All prices inclusive of GST. Transport/installation charges extra.
 3. Use returned CDN URL directly in `<img src="...">`
 4. For manufacturer website images: download, save to static-assets, upload
 
+## GitHub Pages Deployment — Implementation Details
+
+### Why docs/ Instead of CI/CD
+
+A catalogue is fundamentally static content — images, tables, and text. Using a CI/CD pipeline (GitHub Actions) to build and deploy adds unnecessary complexity and points of failure. Instead, commit the pre-built output directly to a `docs/` folder so GitHub Pages can serve it with zero build steps.
+
+### Vite Configuration Changes
+
+The `GITHUB_PAGES` environment variable controls two things:
+
+1. **`base`** — Sets the URL prefix so all asset paths (`/assets/index.js`, `/assets/index.css`) are rewritten to `/<repo-name>/assets/...`. Without this, assets return 404 on GitHub Pages because the site lives at a subdirectory, not the root.
+
+2. **`outDir`** — Outputs to `docs/` instead of `dist/public` so the build is committed directly to the repo.
+
+This dual-mode approach means `pnpm dev` and `pnpm build` still work normally for local development and Manus hosting, while `GITHUB_PAGES=true pnpm vite build` produces the GitHub-ready output.
+
+### SPA Routing on GitHub Pages
+
+GitHub Pages is a static file server — it does not support server-side routing. When a user navigates to `/dealer` or `/customer`, GitHub Pages looks for `dealer/index.html` which does not exist, and returns a 404.
+
+The fix: copy `index.html` to `404.html`. GitHub Pages serves `404.html` for any unmatched route, which loads the React app, which then handles the route client-side via wouter.
+
+### Base Path in Wouter
+
+Wouter's `<Router base={basePath}>` strips the repo subdirectory prefix from the URL before matching routes. This means route definitions stay clean (`/dealer`, `/customer`) while the actual URLs are `/<repo-name>/dealer`, `/<repo-name>/customer`.
+
+The base path is read from `import.meta.env.BASE_URL`, which Vite sets automatically based on the `base` config value.
+
+### .nojekyll File
+
+GitHub Pages processes files through Jekyll by default, which ignores files and directories starting with an underscore (`_`). Vite sometimes generates such files. The `.nojekyll` file disables Jekyll processing entirely.
+
+### Cleaning Development Artifacts
+
+The Manus development environment injects debug scripts (`debug-collector.js`) and analytics tags into the HTML during build. These must be removed from the production `docs/index.html` because:
+- The debug endpoint (`/__manus__/logs`) does not exist on GitHub Pages
+- The analytics endpoint (`manus-analytics.com`) is internal to Manus
+
+Use `sed` or a Python script to strip these tags after building.
+
+### .gitignore Compatibility
+
+The default `.gitignore` excludes `dist/` and `build/` but NOT `docs/`. This is intentional — `docs/` is meant to be committed. If a project's `.gitignore` does exclude `docs/`, remove that line before committing.
+
 ## Common Pitfalls
 
 - **Never use framer-motion whileInView** — causes invisible content
@@ -127,3 +171,7 @@ All prices inclusive of GST. Transport/installation charges extra.
 - **Confirm images before inserting** — wrong product images are a frequent issue
 - **Dealer = hero, always** — never let manufacturer/supplier branding dominate
 - **Ask product category early** — determines specs fields and configuration structure
+- **Always commit docs/ to the repo** — GitHub Pages requires the built output in the repo, not just source code
+- **Always create 404.html** — without it, SPA routes like /dealer and /customer will show GitHub's default 404 page
+- **Always set the correct base path** — without it, CSS/JS assets will 404 on GitHub Pages because they load from the wrong URL prefix
+- **Clean Manus artifacts from production builds** — debug-collector and analytics scripts will cause console errors on GitHub Pages
