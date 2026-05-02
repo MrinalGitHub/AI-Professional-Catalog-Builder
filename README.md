@@ -52,6 +52,11 @@ Both versions are interlinked — update the dealer pricing once, and the custom
 │   │   ├── App.tsx                  # Routing configuration
 │   │   └── index.css                # Design tokens and global styles
 │   └── index.html
+├── docs/                            # Pre-built production output for GitHub Pages
+│   ├── index.html                   # Main entry point
+│   ├── 404.html                     # SPA fallback for client-side routing
+│   ├── .nojekyll                    # Prevents Jekyll processing
+│   └── assets/                      # Bundled CSS and JS
 ├── skill/
 │   ├── SKILL.md                     # Reusable Catalog Builder skill
 │   └── references/
@@ -104,6 +109,36 @@ Read `skill/SKILL.md` for the complete workflow and `skill/references/build-guid
 
 ---
 
+## Live Demo
+
+**View the catalogue live:** [https://mrinalgithub.github.io/AI-Professional-Catalog-Builder/](https://mrinalgithub.github.io/AI-Professional-Catalog-Builder/)
+
+- Dealer version: [/dealer](https://mrinalgithub.github.io/AI-Professional-Catalog-Builder/dealer)
+- Customer version: [/customer](https://mrinalgithub.github.io/AI-Professional-Catalog-Builder/customer)
+
+---
+
+## Deployment (GitHub Pages)
+
+This project includes a pre-built `docs/` folder that GitHub Pages serves directly — no build step required.
+
+**To enable GitHub Pages:**
+1. Go to your repo **Settings** → **Pages**
+2. Under **Source**, select **"Deploy from a branch"**
+3. Choose **main** branch and **/docs** folder
+4. Click **Save**
+
+The site will be live at `https://<username>.github.io/AI-Professional-Catalog-Builder/`
+
+**To rebuild the docs/ folder after code changes:**
+```bash
+GITHUB_PAGES=true pnpm vite build
+cp docs/index.html docs/404.html
+git add docs/ && git commit -m "Rebuild docs for GitHub Pages" && git push
+```
+
+---
+
 ## Running Locally
 
 ```bash
@@ -113,8 +148,11 @@ pnpm install
 # Start development server
 pnpm dev
 
-# Build for production
+# Build for production (standard)
 pnpm build
+
+# Build for GitHub Pages (outputs to docs/)
+GITHUB_PAGES=true pnpm vite build
 ```
 
 ---

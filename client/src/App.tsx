@@ -1,13 +1,16 @@
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
-import { Route, Switch, Redirect } from "wouter";
+import { Route, Switch, Redirect, Router } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import DealerPage from "./pages/DealerPage";
 import CustomerPage from "./pages/CustomerPage";
 
-function Router() {
+// Detect base path from Vite's import.meta.env.BASE_URL (set during build)
+const basePath = import.meta.env.BASE_URL?.replace(/\/$/, '') || '';
+
+function AppRouter() {
   return (
     <Switch>
       <Route path="/dealer" component={DealerPage} />
@@ -27,7 +30,9 @@ function App() {
       <ThemeProvider defaultTheme="light">
         <TooltipProvider>
           <Toaster />
-          <Router />
+          <Router base={basePath}>
+            <AppRouter />
+          </Router>
         </TooltipProvider>
       </ThemeProvider>
     </ErrorBoundary>
