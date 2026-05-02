@@ -16,7 +16,7 @@ const LOGO = "https://d2xsxph8kpxj0f.cloudfront.net/310419663029485756/gXaTpG7hJ
 
 // Front-facing product images (white bg, no yellow, all front view)
 const ELECTRO_ZL9_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/310419663029485756/gXaTpG7hJqp9ZjTjhbtCNX/electro-zl9-front_1d57b51f.jpg";
-const NEUTRON_PRO_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/310419663029485756/gXaTpG7hJqp9ZjTjhbtCNX/neutron-pro-front_b83795ff.jpg";
+const NEUTRON_PRO_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/310419663029485756/gXaTpG7hJqp9ZjTjhbtCNX/neutron-pro-correct_1660188c.webp";
 const POLO_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/310419663029485756/gXaTpG7hJqp9ZjTjhbtCNX/polo-front_f1d7a3ab.jpg";
 
 // ─── DATA ───────────────────────────────────────────────────────────────────
@@ -41,6 +41,34 @@ interface ModelData {
 
 const models: ModelData[] = [
   {
+    name: "NEUTRON PRO",
+    image: NEUTRON_PRO_IMG,
+    specs: [
+      { param: "Net Weight", value: "75 Kg" },
+      { param: "Gross Weight", value: "150 Kg" },
+      { param: "Climbing Capacity", value: "7°" },
+      { param: "Ground Clearance", value: "160 mm" },
+      { param: "Front Suspension", value: "Telescopic Double" },
+      { param: "Rear Suspension", value: "Shocker" },
+      { param: "Carrying Capacity", value: "160 Kg" },
+      { param: "Headlight", value: "LED" },
+      { param: "Taillight", value: "Unique Design" },
+      { param: "Motor Thickness", value: "2.3 mm" },
+      { param: "Motor Height", value: "300 mm" },
+      { param: "Tyre Type", value: "10/10 Tubeless" },
+      { param: "Speedometer", value: "Digital" },
+      { param: "Wheel Type", value: "Alloy Wheels, Front Disc" },
+      { param: "Top Speed", value: "25 Km/h" },
+    ],
+    batteries: [
+      { config: "Without Battery", type: "base", range: "—", price: "₹20,000", charging: "—", charger: "—", warranty: "—" },
+      { config: "Lead Acid 48V", type: "lead", range: "50 km", price: "₹31,000", charging: "5–6 Hours", charger: "4AMP Auto cut", warranty: "1 Year" },
+      { config: "Lead Acid 60V", type: "lead", range: "70 km", price: "₹33,500", charging: "5–6 Hours", charger: "4AMP Auto cut", warranty: "1 Year" },
+      { config: "Lithium 48V / 32Ah", type: "lithium", range: "50 km", price: "₹34,500", charging: "3–4 Hours", charger: "6AMP Auto cut", warranty: "2 Years" },
+      { config: "Lithium 60V / 36Ah", type: "lithium", range: "70 km", price: "₹40,000", charging: "3–4 Hours", charger: "6AMP Auto cut", warranty: "2 Years" },
+    ],
+  },
+  {
     name: "ELECTRO ZL9",
     image: ELECTRO_ZL9_IMG,
     specs: [
@@ -64,34 +92,6 @@ const models: ModelData[] = [
       { config: "Without Battery", type: "base", range: "—", price: "₹25,000", charging: "—", charger: "—", warranty: "—" },
       { config: "Lithium 60V / 36Ah", type: "lithium", range: "70 km", price: "₹45,000", charging: "3–4 Hours", charger: "6AMP Auto cut", warranty: "2 Years" },
       { config: "Lithium 60V / 45Ah", type: "lithium", range: "80 km", price: "₹51,000", charging: "3–4 Hours", charger: "6AMP Auto cut", warranty: "2 Years" },
-    ],
-  },
-  {
-    name: "NEUTRON PRO",
-    image: NEUTRON_PRO_IMG,
-    specs: [
-      { param: "Net Weight", value: "75 Kg" },
-      { param: "Gross Weight", value: "150 Kg" },
-      { param: "Climbing Capacity", value: "7°" },
-      { param: "Ground Clearance", value: "160 mm" },
-      { param: "Front Suspension", value: "Telescopic Double" },
-      { param: "Rear Suspension", value: "Shocker" },
-      { param: "Carrying Capacity", value: "160 Kg" },
-      { param: "Headlight", value: "LED" },
-      { param: "Taillight", value: "Unique Design" },
-      { param: "Motor Thickness", value: "2.3 mm" },
-      { param: "Motor Height", value: "300 mm" },
-      { param: "Tyre Type", value: "10/10 Tubeless, 12/10 Tubeless" },
-      { param: "Speedometer", value: "Digital" },
-      { param: "Wheel Type", value: "Alloy Wheels, Front Disc" },
-      { param: "Top Speed", value: "25 Km/h" },
-    ],
-    batteries: [
-      { config: "Without Battery", type: "base", range: "—", price: "₹21,500", charging: "—", charger: "—", warranty: "—" },
-      { config: "Lead Acid 48V", type: "lead", range: "50 km", price: "₹32,500", charging: "5–6 Hours", charger: "4AMP Auto cut", warranty: "1 Year" },
-      { config: "Lead Acid 60V", type: "lead", range: "70 km", price: "₹35,000", charging: "5–6 Hours", charger: "4AMP Auto cut", warranty: "1 Year" },
-      { config: "Lithium 48V / 32Ah", type: "lithium", range: "50 km", price: "₹36,000", charging: "3–4 Hours", charger: "6AMP Auto cut", warranty: "2 Years" },
-      { config: "Lithium 60V / 36Ah", type: "lithium", range: "70 km", price: "₹41,500", charging: "3–4 Hours", charger: "6AMP Auto cut", warranty: "2 Years" },
     ],
   },
   {
