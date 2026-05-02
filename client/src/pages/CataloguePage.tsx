@@ -4,7 +4,7 @@
  * - RajPraNim Enterprises = Green text
  * - Ryoto Electrix = tiny "Manufactured by" footnote ONLY
  * - Dealer Copy = thick GREEN border + watermark
- * - Customer Copy = thick ORANGE border + watermark + 32% markup
+   * - Customer Copy = thick ORANGE border + 32% markup (NO watermark)
  */
 
 import { Phone, Wrench, MapPin, ChevronDown } from "lucide-react";
@@ -157,12 +157,14 @@ function getWatermarkText(mode: CatalogueMode): string {
 function CoverSection({ mode }: { mode: CatalogueMode }) {
   return (
     <section className={`min-h-screen flex flex-col items-center justify-center bg-white relative px-6 ${getBorderClass(mode)}`}>
-      {/* Watermark */}
-      <div className={`absolute inset-0 flex items-center justify-center pointer-events-none ${getWatermarkClass(mode)}`}>
-        <span className="font-display text-[6rem] sm:text-[8rem] md:text-[10rem] tracking-[0.2em] opacity-20 rotate-[-15deg] select-none whitespace-nowrap">
-          {getWatermarkText(mode)}
-        </span>
-      </div>
+      {/* Watermark — Dealer only */}
+      {mode === "dealer" && (
+        <div className={`absolute inset-0 flex items-center justify-center pointer-events-none ${getWatermarkClass(mode)}`}>
+          <span className="font-display text-[6rem] sm:text-[8rem] md:text-[10rem] tracking-[0.2em] opacity-20 rotate-[-15deg] select-none whitespace-nowrap">
+            {getWatermarkText(mode)}
+          </span>
+        </div>
+      )}
 
       <div className="text-center max-w-2xl animate-in fade-in slide-in-from-bottom-4 duration-700 relative z-10">
         {/* HERO: Living Vitals Logo — MASSIVE */}
@@ -231,12 +233,14 @@ function ModelPage({ model, index, mode }: { model: ModelData; index: number; mo
       id={model.name.toLowerCase().replace(/\s+/g, "-")}
       className={`min-h-screen bg-white border-t border-gray-100 py-12 md:py-16 lg:py-20 relative ${getBorderClass(mode)}`}
     >
-      {/* Watermark */}
-      <div className={`absolute inset-0 flex items-center justify-center pointer-events-none ${getWatermarkClass(mode)}`}>
-        <span className="font-display text-[5rem] sm:text-[6rem] md:text-[8rem] tracking-[0.2em] opacity-15 rotate-[-15deg] select-none whitespace-nowrap">
-          {getWatermarkText(mode)}
-        </span>
-      </div>
+      {/* Watermark — Dealer only */}
+      {mode === "dealer" && (
+        <div className={`absolute inset-0 flex items-center justify-center pointer-events-none ${getWatermarkClass(mode)}`}>
+          <span className="font-display text-[5rem] sm:text-[6rem] md:text-[8rem] tracking-[0.2em] opacity-15 rotate-[-15deg] select-none whitespace-nowrap">
+            {getWatermarkText(mode)}
+          </span>
+        </div>
+      )}
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
@@ -364,12 +368,14 @@ function ModelPage({ model, index, mode }: { model: ModelData; index: number; mo
 function ContactSection({ mode }: { mode: CatalogueMode }) {
   return (
     <section className={`bg-white border-t border-gray-200 py-16 md:py-20 relative ${getBorderClass(mode)}`} id="contact">
-      {/* Watermark */}
-      <div className={`absolute inset-0 flex items-center justify-center pointer-events-none ${getWatermarkClass(mode)}`}>
-        <span className="font-display text-[5rem] sm:text-[6rem] md:text-[8rem] tracking-[0.2em] opacity-15 rotate-[-15deg] select-none whitespace-nowrap">
-          {getWatermarkText(mode)}
-        </span>
-      </div>
+      {/* Watermark — Dealer only */}
+      {mode === "dealer" && (
+        <div className={`absolute inset-0 flex items-center justify-center pointer-events-none ${getWatermarkClass(mode)}`}>
+          <span className="font-display text-[5rem] sm:text-[6rem] md:text-[8rem] tracking-[0.2em] opacity-15 rotate-[-15deg] select-none whitespace-nowrap">
+            {getWatermarkText(mode)}
+          </span>
+        </div>
+      )}
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 relative z-10">
         <div className="text-center mb-12">
