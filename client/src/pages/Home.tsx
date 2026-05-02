@@ -41,7 +41,7 @@ interface ModelData {
 
 const models: ModelData[] = [
   {
-    name: "NEUTRON PRO",
+    name: "NEUTRON PRO (SL 10'10)",
     image: NEUTRON_PRO_IMG,
     specs: [
       { param: "Net Weight", value: "75 Kg" },
@@ -69,7 +69,7 @@ const models: ModelData[] = [
     ],
   },
   {
-    name: "ELECTRO ZL9",
+    name: "ELECTRO ZL9 (ZL 9 12'10)",
     image: ELECTRO_ZL9_IMG,
     specs: [
       { param: "Net Weight", value: "80 Kg" },
@@ -95,7 +95,7 @@ const models: ModelData[] = [
     ],
   },
   {
-    name: "POLO",
+    name: "POLO (CS 2 12'12)",
     image: POLO_IMG,
     specs: [
       { param: "Net Weight", value: "95 Kg" },
