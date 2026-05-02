@@ -300,6 +300,9 @@ function ModelPage({ model, index }: { model: ModelData; index: number }) {
           <p className="text-[11px] text-gray-400 mt-4 font-body">
             All prices inclusive of GST. Transport charges extra. Lithium-ion batteries offer superior range, faster charging, and longer warranty.
           </p>
+          <p className="text-[11px] text-gray-400 mt-2 font-body italic">
+            * Accessories displayed in product images are not included in the listed vehicle price and are available at an additional cost.
+          </p>
         </div>
       </div>
     </section>
