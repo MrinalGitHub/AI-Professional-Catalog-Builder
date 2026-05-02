@@ -204,22 +204,22 @@ function CoverSection({ mode }: { mode: CatalogueMode }) {
         </div>
 
         {/* Mode indicator badge */}
-        <div className={`inline-block px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider mb-6 ${
-          mode === "dealer" ? "bg-green-100 text-green-700 border border-green-300" : "bg-orange-100 text-orange-700 border border-orange-300"
+        <div className={`inline-block px-5 py-2 rounded-full text-sm font-bold uppercase tracking-wider mb-8 ${
+          mode === "dealer" ? "bg-green-100 text-green-700 border-2 border-green-400" : "bg-orange-100 text-orange-700 border-2 border-orange-400"
         }`}>
           {mode === "dealer" ? "Dealer Pricing" : "Customer Pricing"}
+        </div>
+
+        {/* Scroll hint — below badge */}
+        <div className="flex flex-col items-center text-gray-400 mt-4 mb-6">
+          <span className="text-[10px] uppercase tracking-[0.2em] mb-1 font-body">Explore Models</span>
+          <ChevronDown className="w-4 h-4 animate-bounce" />
         </div>
 
         {/* Manufacturer — tiny footnote */}
         <p className="text-[11px] text-gray-400 font-body">
           Manufactured by Ryoto Electrix Pvt Ltd., Chevella, Hyderabad
         </p>
-      </div>
-
-      {/* Scroll hint */}
-      <div className="absolute bottom-10 flex flex-col items-center text-gray-400 animate-in fade-in duration-500 delay-1000 z-10">
-        <span className="text-[10px] uppercase tracking-[0.2em] mb-1 font-body">Explore Models</span>
-        <ChevronDown className="w-4 h-4 animate-bounce" />
       </div>
     </section>
   );
