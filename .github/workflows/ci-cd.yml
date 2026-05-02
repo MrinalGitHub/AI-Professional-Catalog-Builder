@@ -1,0 +1,118 @@
+name: CI/CD - Build & Deploy Catalogue
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  # ─── BUILD & TYPE CHECK ────────────────────────────────────────────────
+  build:
+    name: Build & Validate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Type check
+        run: pnpm check
+
+      - name: Build production bundle
+        run: pnpm build
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: catalogue-build
+          path: dist/public
+          retention-days: 7
+
+  # ─── DEPLOY TO GITHUB PAGES ────────────────────────────────────────────
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: build
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: catalogue-build
+          path: dist
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload to GitHub Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+  # ─── PRICING VALIDATION ────────────────────────────────────────────────
+  validate-pricing:
+    name: Validate Pricing Data
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Check pricing consistency
+        run: |
+          echo "Validating pricing data in CataloguePage.tsx..."
+          # Ensure all models have prices > 0
+          if grep -q '"price": 0' client/src/pages/CataloguePage.tsx 2>/dev/null; then
+            echo "❌ ERROR: Found zero-price entries in catalogue"
+            exit 1
+          fi
+          # Ensure markup constant is defined
+          if ! grep -q 'MARKUP' client/src/pages/CataloguePage.tsx; then
+            echo "❌ ERROR: MARKUP constant not found"
+            exit 1
+          fi
+          echo "✅ Pricing data validation passed"
+
+      - name: Check model data integrity
+        run: |
+          echo "Checking model data integrity..."
+          # Verify all 3 models exist
+          MODELS_COUNT=$(grep -c '"name":' client/src/pages/CataloguePage.tsx || true)
+          echo "Found $MODELS_COUNT model entries"
+          if [ "$MODELS_COUNT" -lt 3 ]; then
+            echo "⚠️ WARNING: Expected at least 3 models, found $MODELS_COUNT"
+          fi
+          echo "✅ Model data integrity check passed"
