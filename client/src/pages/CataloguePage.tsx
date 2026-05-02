@@ -251,7 +251,7 @@ function ModelPage({ model, index, mode }: { model: ModelData; index: number; mo
           <div className="w-full lg:w-[40%] flex-shrink-0">
             <div>
               {/* Model Name — LARGE, Lookbook style */}
-              <h2 className="font-display text-5xl sm:text-6xl md:text-7xl tracking-[0.08em] text-gray-900 leading-none mb-6 lg:mb-8">
+              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl tracking-[0.08em] text-gray-900 leading-none mb-6 lg:mb-8 whitespace-nowrap">
                 {model.name}
               </h2>
 
