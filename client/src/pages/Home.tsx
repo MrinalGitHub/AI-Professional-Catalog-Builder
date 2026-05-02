@@ -330,9 +330,9 @@ function ContactSection() {
             <div className="flex items-start gap-3">
               <MapPin className="w-5 h-5 text-lv-orange mt-0.5 flex-shrink-0" />
               <p className="font-body text-sm text-gray-600 leading-relaxed">
-                Bawarchi Hotel, Mansanpally Rd, adjacent to Maheshwaram,
-                opposite to Bharat Petrol Bunk, Maheshwaram,
-                Hyderabad, Telangana 501359
+                Opposite to Bharat Petrol Bunk,
+                Maheshwaram-Mansanpally Road,
+                Maheshwaram, Hyderabad, Telangana 501359
               </p>
             </div>
             <div className="space-y-4">
