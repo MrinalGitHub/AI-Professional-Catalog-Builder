@@ -15,7 +15,7 @@ Both versions are interlinked — update the dealer pricing once, and the custom
 
 ---
 
-## Current Catalogue: Living Vitals — Electric Scooter Catalogue
+## Sample Catalogue: Living Vitals — Electric Scooter Catalogue
 
 | Detail | Value |
 |--------|-------|
